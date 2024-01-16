@@ -18,4 +18,37 @@ async function readPosts()  {
     }
 }
 
+async function addNewPost(title, body)  {
+    await fetch(
+        'https://jsonplaceholder.typicode.com/posts',
+        {
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: title,
+                body: body,
+                userId: 2
+            })
+        }
+    );
+
+    document.querySelector('#title-field').value = '';
+    document.querySelector('#body-field').value = '';
+
+    readPosts();
+};
+
+document.querySelector('#send-post').addEventListener('click', ()   =>  {
+    let title = document.querySelector('#title-field').value;
+    let body = document.querySelector('#body-field').value;
+
+    if(title && body)   {
+        addNewPost(title, body);
+    } else {
+        alert('complete all the fields');
+    }
+});
+
 readPosts();
